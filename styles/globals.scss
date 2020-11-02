@@ -1,0 +1,24 @@
+/* colors */
+$maincolor: #0D0C1D;
+$secondarycolor: #161B33;
+$alertcolor: #CF1259;
+$purplecolor: #A594F9;
+$whitecolor: #FFFFFF; 
+
+@import "./navbar";
+@import "./login.scss";
+#page-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background: $maincolor;
+}
+.toast .message{
+    font-weight: bolder;
+}
+*:focus {
+    outline: none;
+}
