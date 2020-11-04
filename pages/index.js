@@ -1,22 +1,12 @@
-import {useEffect,useState} from 'react';
-import axios from "axios";
-import { Check, X } from '@geist-ui/react-icons'
-
+import React, {useEffect} from 'react';
+import { Check, X } from '@geist-ui/react-icons';
+import {UserContext} from "../components/contextprovider";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios.get('http://localhost:3000/pages/islogged').then(response => {
-      if (response.data.code === 200){
-        setUser(response.data.user.email);
-      }else{
-        setUser(null);
-      }
-    })
-  })
+  const [user] = React.useContext(UserContext);
   return (
     <div>
-      {(user !== null) ? <Check color="white"/> : <X color="white"/> }
+      {(user === true) ? <Check color="white"/> : <X color="white"/> }
     </div>
   )
 };

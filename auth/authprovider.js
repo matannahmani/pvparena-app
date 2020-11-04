@@ -11,11 +11,10 @@ const login = (data) => {
       .then(response => {
         localStorage.setItem("isLogged", true)
         return response.data;
-    }).catch(error => {
+      }).catch(error => {
         localStorage.setItem("isLogged", false);
-        console.log(response.data)
-        return response.data;
-    })
+        return error.response;
+    });
     });
   }
   const signup = async (data) => {
@@ -31,13 +30,21 @@ const login = (data) => {
     });
   }
   const logout = async () => {
-    return axios.get('http://localhost:3000/login').then(response => {
       return axios.delete("http://localhost:3000/logout")
       .then(response => {
         localStorage.setItem("isLogged", false);
-        return response.data;
-      })
-    });
+        return false;
+      });
+    }
+  const isLogged = async() =>{
+      if (localStorage.getItem('isLogged') === "true"){
+      return axios.get('http://localhost:3000/login').then(response => {
+        if(response.data.status.code === 200)
+          return true;
+      });
+    }
+      localStorage.setItem('isLogged', false);
+      return false;
   }
 
-export {login,logout,signup};
+export {login,logout,signup,isLogged};

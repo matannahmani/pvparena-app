@@ -1,6 +1,7 @@
 
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { CssBaseline } from '@geist-ui/react'
+import Router from 'next/router'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

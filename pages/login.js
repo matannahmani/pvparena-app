@@ -2,23 +2,30 @@ import { useForm } from "react-hook-form";
 import { Loading,useToasts } from '@geist-ui/react'
 import { useState } from 'react';
 import {login} from "../auth/authprovider";
+import React from 'react';
+import {UserContext} from "../components/contextprovider";
+import Router from 'next/router'
+
 export default function Login() {
   const [toasts, setToast] = useToasts();
   const [loading, setLoading] = useState(false);
+  const [user,setUser] = React.useContext(UserContext);
   const { register, errors, handleSubmit } = useForm({
       mode: "onChange"
     });
     const onSubmit = async (data) => {
-     setLoading(true); 
+     setLoading(true);
      login({...data}).then(data => {
-        if (data.code === 401){
-            setToast({text: data.message.toUpperCase(), type: 'error'})
-          setTimeout(() => {      
+        if (data.status === 401){
+          setToast({text: data.data.toUpperCase(), type: 'error'});
+          setTimeout( () => {
             setLoading(false);
           }, 1000);
         }
         else if (data.status.code === 200){
+            setUser(true);
             setToast({text: "Logged in Successfully"});
+            Router.push('/');
         }
      });
     };
